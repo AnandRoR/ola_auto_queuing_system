@@ -1,0 +1,2 @@
+class DriverRequest < ApplicationRecord
+end
