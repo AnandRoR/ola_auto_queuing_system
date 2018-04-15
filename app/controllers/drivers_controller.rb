@@ -11,6 +11,8 @@ class DriversController < ApplicationController
   # GET /drivers/1.json
   def show
     @waiting = Request.waiting
+    @ongoing =  @driver.requests.ongoing
+    @complete = @driver.requests.complete
   end
 
   # GET /drivers/new
@@ -63,9 +65,16 @@ class DriversController < ApplicationController
 
   def accept_request
     request = Request.find(params[:request_id])
-    request.update(driver_id: params[:driver_id], start_at: , end_at: DateTime.now + 5.min)
+    respond_to do |format|
+      if request.update(driver_id: params[:driver_id], status: "ongoing", start_at: DateTime.now, end_at: DateTime.now + 5.minutes)
+        format.html { redirect_to driver_url(params[:driver_id]), notice: 'Request accepted' }
+        format.json { render json status: "Success", message: "Request accepted" }
+      else
+        format.html { redirect_to driver_url(params[:driver_id]), notice: 'Request declined' }
+        format.json { render json: request.errors, status: "Failure" }
+      end
+    end
   end
-
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_driver

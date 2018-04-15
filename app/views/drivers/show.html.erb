@@ -1,13 +1,13 @@
 <p id="notice"><%= notice %></p>
 <%= link_to "Refresh", driver_path(@driver)%>
-<table>
+<table width="50%">
 <tr>
 	<th>Waiting</th>
 	<th>Ongoing</th>
 	<th>Complete</th>
 	</tr>
 	<tr>
-		<td>
+		<td width="33.33%">
 		 <% @waiting.each do |wait|%>
 			<div> 
 				<label>Req id: <%= wait.id %> </label> 
@@ -17,10 +17,27 @@
 			</div>
 		 <% end %>
 		</td>
-		<td>
-			
+		<td width="33.33%">
+			<% @ongoing.each do |wait|%>
+			<div> 
+				<label>Req id: <%= wait.id %> </label> 
+				<label>Cust id: <%= wait.user_id %></label>
+				<label>Request: <%= distance_of_time_in_words(wait.created_at, DateTime.now)%> ago</label>
+				<label>Picked Up: <%= distance_of_time_in_words(wait.created_at, DateTime.now)%>ago</label>
+			</div>
+		 <% end %>
 		</td>
-		<td></td>
+		<td width="33.33%">
+			<% @complete.each do |wait|%>
+			<div> 
+				<label>Req id: <%= wait.id %> </label> 
+				<label>Cust id: <%= wait.user_id %></label>
+				<label>Request: <%= distance_of_time_in_words(wait.created_at, DateTime.now)%> ago</label>
+				<label>Picked Up: <%= distance_of_time_in_words(wait.start_at, DateTime.now)%> ago</label>
+				<label>Completed: <%= distance_of_time_in_words(wait.end_at, DateTime.now)%>ago</label>
+			</div>
+		 <% end %>
+		</td>
 	</tr>
 </table>
 
