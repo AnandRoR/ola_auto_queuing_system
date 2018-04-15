@@ -10,20 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_14_105902) do
-
-  create_table "driver_requests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "driver_id", null: false
-    t.integer "request_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+ActiveRecord::Schema.define(version: 2018_04_14_105843) do
 
   create_table "requests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "user_id", null: false
+    t.integer "driver_id"
     t.datetime "start_at"
     t.datetime "end_at"
-    t.string "status", null: false
+    t.integer "status", null: false
     t.integer "lock_version"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -32,6 +26,8 @@ ActiveRecord::Schema.define(version: 2018_04_14_105902) do
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "indentifier"
+    t.string "first_name"
+    t.string "last_name"
     t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
