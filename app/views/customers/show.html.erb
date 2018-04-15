@@ -1,4 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+<%= form_for @request do |f| %>
+<label>Customer Id: </label><%= f.text_field :user_id %>
+<% end %>
 <%= link_to 'Edit', edit_customer_path(@customer) %> |
 <%= link_to 'Back', customers_path %>
