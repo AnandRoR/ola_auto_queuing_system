@@ -13,7 +13,7 @@
 				<label>Req id: <%= wait.id %> </label> 
 				<label>Cust id: <%= wait.user_id %></label>
 				<label><%= distance_of_time_in_words(wait.created_at, DateTime.now)%></label>
-				<%= link_to "Select", edit_request_path(wait.id, driver_id: @driver.id) %>
+				<%= link_to "Select", accept_request_path(request_id: wait.id, driver_id: @driver.id) %>
 			</div>
 		 <% end %>
 		</td>

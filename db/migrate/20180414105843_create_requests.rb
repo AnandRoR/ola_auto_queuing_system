@@ -5,7 +5,7 @@ class CreateRequests < ActiveRecord::Migration[5.2]
       t.integer :driver_id
       t.datetime :start_at
       t.datetime :end_at
-      t.integer :status, null: false
+      t.integer :status, null: false, default: 0
       t.integer :lock_version
       t.timestamps
     end

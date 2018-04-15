@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2018_04_14_105843) do
     t.integer "driver_id"
     t.datetime "start_at"
     t.datetime "end_at"
-    t.integer "status", null: false
+    t.integer "status", default: 0, null: false
     t.integer "lock_version"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
