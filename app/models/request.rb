@@ -5,4 +5,7 @@ class Request < ApplicationRecord
   def self.complete_ongoing_trip
   	where(end_at: DateTime.now..DateTime.now + 1.minute).update_all(status: "complete")
   end
+  def time_elapsed
+  	waiting? ? created_at : start_at 
+  end
 end

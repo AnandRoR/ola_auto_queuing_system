@@ -8,11 +8,32 @@ class DriversController < ApplicationController
   end
 
   # GET /drivers/1
-  # GET /drivers/1.json
+  # GET /drivers/1.json 
+  # Response: {
+#     "waiting": [],
+#     "ongoing": [
+#         {
+#             "id": 2,
+#             "user_id": 2,
+#             "driver_id": 3,
+#             "start_at": "2018-04-15T15:22:52.000Z",
+#             "end_at": "2018-04-15T15:27:52.000Z",
+#             "status": "ongoing",
+#             "lock_version": 1,
+#             "created_at": "2018-04-15T15:22:04.000Z",
+#             "updated_at": "2018-04-15T15:22:52.000Z"
+#         }
+#     ],
+#     "complete": [
+#     ]
+# }
   def show
     @waiting = Request.waiting
     @ongoing =  @driver.requests.ongoing
     @complete = @driver.requests.complete
+    respond_to do |format|
+      format.json{render json: { waiting: @waiting, ongoing: @ongoing, complete: @complete}}
+    end
   end
 
   # GET /drivers/new
@@ -63,15 +84,22 @@ class DriversController < ApplicationController
     end
   end
 
+  # GET /drivers/accept_request?driver_id=1&request_id=1
+  # GET /drivers/accept_request?driver_id=1&request_id=1.json
+  # API Response:
+  #{
+  #     "status": "Success",
+  #     "message": "Request accepted"
+  # }
   def accept_request
-    request = Request.find(params[:request_id])
+    trip = Request.find(params[:request_id])
     respond_to do |format|
-      if request.update(driver_id: params[:driver_id], status: "ongoing", start_at: DateTime.now, end_at: DateTime.now + 5.minutes)
+      if trip.update(driver_id: params[:driver_id], status: "ongoing", start_at: DateTime.now, end_at: DateTime.now + 5.minutes)
+        format.json { render json: { status: "Success", message: "Request accepted"} }
         format.html { redirect_to driver_url(params[:driver_id]), notice: 'Request accepted' }
-        format.json { render json status: "Success", message: "Request accepted" }
       else
+        format.json { render json: trip.errors, status: "Failure" }
         format.html { redirect_to driver_url(params[:driver_id]), notice: 'Request declined' }
-        format.json { render json: request.errors, status: "Failure" }
       end
     end
   end

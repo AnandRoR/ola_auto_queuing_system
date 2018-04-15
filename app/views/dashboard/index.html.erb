@@ -1,0 +1,30 @@
+<table width="50%">
+<tr>
+	<th>Request Id</th>
+	<th>Customer ID</th>
+	<th>Time Elapsed</th>
+	<th>Status</th>
+	<th>Driver</th>
+	</tr>
+    <% @requests.each do |reqst|%>
+	<tr>
+		<td width="20%">
+			<label><%= reqst.id %></label>
+		</td>
+		<td width="20%">
+			<label><%= reqst.user_id %></label>
+		</td>
+
+		<td width="20%">
+			<label><%= distance_of_time_in_words(reqst.time_elapsed, DateTime.now)%></label> 
+		</td>
+		<td width="20%">
+			<label><%= reqst.status %></label>
+		</td>
+		<td width="20%">
+			<%= reqst.driver_id? ? reqst.driver_id : "None" %>
+		</td>
+	</tr>
+	<% end %>
+	</table>?
+</table>
